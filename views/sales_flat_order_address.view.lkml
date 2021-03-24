@@ -47,6 +47,7 @@ view: sales_flat_order_address {
 
   dimension: entity_id {
     type: number
+    primary_key: yes
     sql: ${TABLE}.entity_id ;;
   }
 

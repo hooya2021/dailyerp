@@ -228,6 +228,7 @@ view: sales_flat_order_item {
 
   dimension: item_id {
     type: number
+    primary_key: yes
     sql: ${TABLE}.item_id ;;
   }
 

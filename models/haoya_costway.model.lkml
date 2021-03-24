@@ -566,29 +566,16 @@ explore: sales_flat_order {
     sql_on: ${sales_flat_order.customer_id} = ${customer_entity.entity_id} ;;
   }
   join: sales_flat_order_address {
-    type: left_outer
-    relationship: many_to_one
+    relationship: one_to_one
     sql_on: ${sales_flat_order.entity_id} = ${sales_flat_order_address.entity_id} ;;
   }
   join: sales_flat_order_item {
-    type: left_outer
-    relationship: many_to_one
+    relationship: one_to_many
     sql_on: ${sales_flat_order.entity_id} = ${sales_flat_order_item.order_id} ;;
   }
 }
 
-explore: sales_flat_order_address {
-  join: sales_flat_order{
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${sales_flat_order_address.entity_id} = ${sales_flat_order.entity_id} ;;
-  }
-  join: sales_flat_order_item {
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${sales_flat_order_item.order_id} = ${sales_flat_order.entity_id} ;;
-  }
-}
+explore: sales_flat_order_address {}
 
 explore: sales_flat_order_grid {}
 
