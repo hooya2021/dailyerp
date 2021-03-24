@@ -562,8 +562,7 @@ explore: sales_flat_invoice_item {}
 
 explore: sales_flat_order {
   join: customer_entity {
-    type: inner
-    relationship: one_to_one
+    relationship: many_to_one
     sql_on: ${sales_flat_order.customer_id} = ${customer_entity.entity_id} ;;
   }
   join: sales_flat_order_address {
