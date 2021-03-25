@@ -579,7 +579,12 @@ explore: sales_flat_order_address {}
 
 explore: sales_flat_order_grid {}
 
-explore: sales_flat_order_item {}
+explore: sales_flat_order_item {
+  join: sales_flat_order {
+    relationship: one_to_one
+    sql_on: ${sales_flat_order_item.order_id} = ${sales_flat_order.entity_id};;
+  }
+}
 
 explore: sales_flat_order_payment {}
 
