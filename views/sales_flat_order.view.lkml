@@ -694,6 +694,13 @@ view: sales_flat_order {
     sql: ${TABLE}.total_paid ;;
   }
 
+  dimension: total_paid_group {
+    type: tier
+    tiers: [0,100,200,300,500,1000]
+    style: classic
+    sql: ${total_paid} ;;
+  }
+
   dimension: total_qty_ordered {
     type: number
     sql: ${TABLE}.total_qty_ordered ;;
