@@ -272,6 +272,12 @@ view: sales_flat_order_item {
     sql: ${TABLE}.price ;;
   }
 
+  dimension: price_group {
+    type: tier
+    tiers: [50,100,150,200,400]
+    sql: ${price} ;;
+  }
+
   dimension: price_incl_tax {
     type: number
     sql: ${TABLE}.price_incl_tax ;;
@@ -434,5 +440,10 @@ view: sales_flat_order_item {
   measure: count {
     type: count
     drill_fields: [hostname, name]
+  }
+
+  measure: qty_ordered_count {
+    type: sum
+    sql: ${qty_ordered} ;;
   }
 }
