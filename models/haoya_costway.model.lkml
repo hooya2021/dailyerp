@@ -402,6 +402,10 @@ explore: op_avatax_queue {}
 
 explore: overstock_tmp {}
 
+explore: order_join_ga {
+  from: sql_runner_query
+}
+
 explore: permission_block {}
 
 explore: permission_variable {}
