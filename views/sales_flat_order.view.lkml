@@ -695,10 +695,33 @@ view: sales_flat_order {
   }
 
   dimension: grand_total_group {
-    type: tier
-    tiers: [0,100,200,300,500,1000]
-    style: classic
-    sql: ${grand_total} ;;
+    case: {
+      when: {
+        sql: ${grand_total} >= 0 AND ${grand_total} < 100;;
+        label: "0-100"
+      }
+      when: {
+        sql: ${grand_total} >= 100 AND ${grand_total} < 200;;
+        label: "100-200"
+      }
+      when: {
+        sql: ${grand_total} >= 200 AND ${grand_total} < 300;;
+        label: "200-300"
+      }
+      when: {
+        sql: ${grand_total} >= 300 AND ${grand_total} < 500;;
+        label: "300-500"
+      }
+      when: {
+        sql: ${grand_total} >= 500 AND ${grand_total} < 1000;;
+        label: "500-1000"
+      }
+      when: {
+        sql: ${grand_total} >= 1000;;
+        label: "1000+"
+      }
+      else: "Invalid Value"
+  }
   }
 
   dimension: total_qty_ordered {

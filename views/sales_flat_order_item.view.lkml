@@ -273,9 +273,33 @@ view: sales_flat_order_item {
   }
 
   dimension: price_group {
-    type: tier
-    tiers: [50,100,150,200,400]
-    sql: ${price} ;;
+    case: {
+      when: {
+        sql: ${price} >= 0 AND ${price} < 50;;
+        label: "0-50"
+      }
+      when: {
+        sql: ${price} >= 50 AND ${price} < 100;;
+        label: "50-100"
+      }
+      when: {
+        sql: ${price} >= 100 AND ${price} < 150;;
+        label: "100-150"
+      }
+      when: {
+        sql: ${price} >= 150 AND ${price} < 200;;
+        label: "150-200"
+      }
+      when: {
+        sql: ${price} >= 200 AND ${price} < 400;;
+        label: "200-400"
+      }
+      when: {
+        sql: ${price} >= 400;;
+        label: "400+"
+      }
+      else: "Invalid Value"
+    }
   }
 
   dimension: price_incl_tax {
@@ -445,5 +469,10 @@ view: sales_flat_order_item {
   measure: qty_ordered_count {
     type: sum
     sql: ${qty_ordered} ;;
+  }
+
+  measure: item_count {
+    type: count_distinct
+    sql: ${item_id} ;;
   }
 }
