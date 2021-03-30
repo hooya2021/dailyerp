@@ -790,6 +790,12 @@ view: sales_flat_order {
     filters: [status: "completed,shipping,processing,Refunded"]
   }
 
+  measure: Total_Refunde_Amount {
+    type: sum
+    sql: ${total_paid} ;;
+    filters: [status: "refunded"]
+  }
+
 
   # ----- Sets of fields for drilling ------
   set: detail {

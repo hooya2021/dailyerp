@@ -120,6 +120,8 @@ view: pop_arbitrary_order {
     value_format_name: percent_2
   }
 
+
+
   dimension_group: created {hidden: yes}
   dimension: ytd_only {hidden:yes}
   dimension: mtd_only {hidden:yes}
@@ -132,5 +134,31 @@ explore: pop_arbitrary_order {
   label: "sales_flat_order: Compare two arbitrary date ranges"
   always_filter: {
     filters: [first_period_filter: "7 days",second_period_filter: "7 days",period_selected:"-NULL"]
+  }
+  sql_always_where: ${catalog_category_entity_varchar.attribute_id}=41;;
+  join: sales_flat_order_item {
+    type: left_outer
+    sql_on: ${pop_arbitrary_order.entity_id}=${sales_flat_order_item.order_id} ;;
+    relationship: one_to_many
+  }
+  join: catalog_category_product {
+    type: left_outer
+    sql_on: ${sales_flat_order_item.product_id}=${catalog_category_product.product_id} ;;
+    relationship: one_to_many
+  }
+  join: catalog_category_entity_varchar {
+    type: left_outer
+    sql_on: ${catalog_category_product.category_id}=${catalog_category_entity_varchar.entity_id} ;;
+    relationship: one_to_one
+  }
+  join: customer_entity {
+    type: left_outer
+    sql_on: ${pop_arbitrary_order.customer_id}=${customer_entity.entity_id} ;;
+    relationship: many_to_one
+  }
+  join: customer_group {
+    type: left_outer
+    sql_on: ${customer_entity.group_id}=${customer_group.customer_group_id} ;;
+    relationship: many_to_one
   }
 }
