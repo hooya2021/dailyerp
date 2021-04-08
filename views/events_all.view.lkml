@@ -265,6 +265,22 @@ view: events_all {
     sql: ${TABLE}.event_date ;;
   }
 
+  dimension_group: creat_event_date {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      hour_of_day,
+      date,
+      week,
+      day_of_week,
+      month,
+      quarter,
+      year
+    ]
+    sql: cast(concat(substr(${TABLE}.event_date,1,4),'-',substr(${TABLE}.event_date,5,2),'-',substr(${TABLE}.event_date,7,2)) as timestamp) ;;
+  }
+
   dimension: event_dimensions__hostname {
     type: string
     sql: ${TABLE}.event_dimensions.hostname ;;
