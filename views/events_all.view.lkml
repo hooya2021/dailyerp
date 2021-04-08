@@ -1,6 +1,5 @@
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
 explore: events_all {
-  hidden: yes
 
   join: events_all__items {
     view_label: "Events All: Items"
