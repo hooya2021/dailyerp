@@ -250,11 +250,17 @@ view: sales_flat_order {
       time,
       date,
       week,
+      day_of_week,
       month,
       quarter,
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: day_of_week {
+    type: string
+    sql: ${created_day_of_week} ;;
   }
 
   dimension_group: customer_dob {
@@ -722,6 +728,28 @@ view: sales_flat_order {
       }
       else: "Invalid Value"
   }
+  }
+# 时间维度
+  dimension: created_group {
+    case: {
+      when: {
+        sql:  FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) >= "0" AND FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) < "06";;
+        label: "0:00 - 6:00"
+      }
+      when: {
+        sql: FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) >= "06" AND FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) < "12";;
+        label: "6:00 - 12:00"
+      }
+      when: {
+        sql: FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) >= "12" AND FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) < "18";;
+        label: "12:00 - 18:00"
+      }
+      when: {
+        sql: FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) >= "18" AND FORMAT_TIMESTAMP('%H', ${TABLE}.created_at) <= "24";;
+        label: "18:00 - 24:00"
+      }
+      else: "Invalid Value"
+    }
   }
 
   dimension: total_qty_ordered {
