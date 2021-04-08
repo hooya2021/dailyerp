@@ -122,7 +122,7 @@ view: pop_arbitrary_order {
 
 
 
-  dimension_group: created {hidden: yes}
+  dimension_group: created {}
   dimension: ytd_only {hidden:yes}
   dimension: mtd_only {hidden:yes}
   dimension: wtd_only {hidden:yes}
