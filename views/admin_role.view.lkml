@@ -44,6 +44,7 @@ view: admin_role {
 
   measure: count {
     type: count
+    label: "123"
     drill_fields: [role_name, hostname]
   }
 }
