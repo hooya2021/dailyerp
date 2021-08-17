@@ -1,4 +1,5 @@
 connection: "costmin"
+connection: "for_us_daily"
 
 # include all the views
 include: "/views/**/*.view"
@@ -14,3 +15,4 @@ explore: drop_shop_purchase {}
 explore: google_order {}
 explore: report_order {}
 explore: union_shop{}
+explore: channels {}
