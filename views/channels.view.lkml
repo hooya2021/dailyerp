@@ -41,7 +41,7 @@ view: channels {
       select weekday as weekday,
       cast(date as timestamp) as date,
       null as impression,
-      clicks as clicks,
+      null as clicks,
       null as BounceRate,
       conversions as conversions,
       revenue as Revenue,

@@ -16,3 +16,4 @@ explore: google_order {}
 explore: report_order {}
 explore: union_shop{}
 explore: channels {}
+explore: facebook_ads {}
