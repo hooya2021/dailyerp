@@ -1,6 +1,6 @@
 view: union_shop {
   derived_table: {
-    sql: select (cast(report_time as timestamp)) as created_at,
+    sql:select (cast(report_time as timestamp)) as created_at,
       sum(drop_amount) as drop_amount ,
       sum(drop_order) as drop_order ,
       sum(drop_qty) as drop_qty ,
@@ -10,6 +10,7 @@ view: union_shop {
       null as Revenus,
       null as Store_qty,
       null as Orders,
+      null as Cost,
       "散客订单/全站订单" as store
       from `alidbtogcp.costmin.report_order`
       group by 1
@@ -25,6 +26,7 @@ view: union_shop {
       sum(grand_total) as Revenue,
       sum(orderqty) as Store_qty,
       COUNT(DISTINCT google_id) as Orders,
+      null as Cost,
       "costway-SA" as store
       from `alidbtogcp.costmin.google_order`
       group by 1
@@ -40,9 +42,10 @@ view: union_shop {
       sum(grand_total) AS Revenue,
       sum(qty) as Store_qty,
       COUNT(DISTINCT increment_id) as Orders,
+      null as Cost,
       store as store
       from `alidbtogcp.costmin.drop_shop_purchase`
-      group by 1,11
+      group by 1,12
 
       union all
       select (cast(date as timestamp)) as created_at,
@@ -55,6 +58,7 @@ view: union_shop {
       sum(sales_Total) AS Revenue,
       sum(qty) as Store_qty,
       orders as Orders,
+      sum(cost) as Cost,
       "COSTWAY-FB" as store
       from `alidbtogcp.google_sheet.google_sheet_facebook_shop`
       group by 1,10
@@ -70,10 +74,10 @@ view: union_shop {
       sum(revenue) AS Revenue,
       sum(qty) as Store_qty,
       orders as Orders,
+      null as Cost,
       "sharperImage" as store
       from `alidbtogcp.google_sheet.google_sheet_sharperImage`
       group by 1,10
-
  ;;
   }
 
@@ -327,6 +331,10 @@ measure: previous_period_store_qty {
   dimension: store_qty {
     type: number
     sql: ${TABLE}.Store_qty ;;
+  }
+  dimension: cost {
+    type: number
+    sql: ${TABLE}.Cost ;;
   }
 
   dimension: store {
