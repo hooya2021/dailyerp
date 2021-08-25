@@ -298,8 +298,11 @@ measure: previous_period_store_qty {
         }
 
       when: {
-        sql: ${TABLE}.store="散客订单/全站订单"  ;;
-        label: "散客订单/全站订单"
+        sql: ${TABLE}.store="散客订单"  ;;
+        label: "散客订单"
+      }
+      when: {
+        sql: ${TABLE}.store="全站订单" ;;
       }
       else: "Other"
     }
