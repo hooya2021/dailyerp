@@ -1,84 +1,64 @@
 view: union_shop {
   derived_table: {
-    sql:select (cast(report_time as timestamp)) as created_at,
-      sum(drop_amount) as drop_amount ,
-      sum(drop_order) as drop_order ,
-      sum(drop_qty) as drop_qty ,
-      sum(general_amount) as general_amount ,
-      sum(general_order) as general_order ,
-      sum(general_qty) as general_qty ,
-      null as Revenus,
-      null as Store_qty,
-      null as Orders,
-      null as Cost,
-      "散客订单/全站订单" as store
-      from `alidbtogcp.costmin.report_order`
-      group by 1
+  sql: select (cast(report_time as timestamp)) as created_at,
+  SUM(drop_amount) as Revenus,
+  sum(drop_qty) as Store_qty,
+  sum(drop_order) as Orders,
+  null as Cost,
+  "全站订单" as store
+  from `alidbtogcp.costmin.report_order`
+  group by 1,6
 
-      union all
-      select (cast(ship_by_date as timestamp)) as created_at,
-      null as drop_amount ,
-      null as drop_order ,
-      null as drop_qty ,
-      null as general_amount ,
-      null as general_order ,
-      null as general_qty ,
-      sum(grand_total) as Revenue,
-      sum(orderqty) as Store_qty,
-      COUNT(DISTINCT google_id) as Orders,
-      null as Cost,
-      "costway-SA" as store
-      from `alidbtogcp.costmin.google_order`
-      group by 1
+  union all
+  select (cast(report_time as timestamp)) as created_at,
+  SUM(general_amount) as Revenus,
+  sum(general_qty) as Store_qty,
+  sum(general_order) as Orders,
+  null as Cost,
+  "散客订单" as store
+  from `alidbtogcp.costmin.report_order`
+  group by 1,6
 
-      union all
-      select created_at as created_at,
-      null as drop_amount ,
-      null as drop_order ,
-      null as drop_qty ,
-      null as general_amount ,
-      null as general_order ,
-      null as general_qty ,
-      sum(grand_total) AS Revenue,
-      sum(qty) as Store_qty,
-      COUNT(DISTINCT increment_id) as Orders,
-      null as Cost,
-      store as store
-      from `alidbtogcp.costmin.drop_shop_purchase`
-      group by 1,12
+  union all
+  select (cast(ship_by_date as timestamp)) as created_at,
+  sum(grand_total) as Revenue,
+  sum(orderqty) as Store_qty,
+  COUNT(DISTINCT google_id) as Orders,
+  null as Cost,
+  "costway-SA" as store
+  from `alidbtogcp.costmin.google_order`
+  group by 1,6
 
-      union all
-      select (cast(date as timestamp)) as created_at,
-      null as drop_amount ,
-      null as drop_order ,
-      null as drop_qty ,
-      null as general_amount ,
-      null as general_order ,
-      null as general_qty ,
-      sum(sales_Total) AS Revenue,
-      sum(qty) as Store_qty,
-      orders as Orders,
-      sum(cost) as Cost,
-      "COSTWAY-FB" as store
-      from `alidbtogcp.google_sheet.google_sheet_facebook_shop`
-      group by 1,10
+  union all
+  select created_at as created_at,
+  sum(grand_total) AS Revenue,
+  sum(qty) as Store_qty,
+  COUNT(DISTINCT increment_id) as Orders,
+  null as Cost,
+  store as store
+  from `alidbtogcp.costmin.drop_shop_purchase`
+  group by 1,6
 
-      union all
-      select (cast(date as timestamp)) as created_at,
-      null as drop_amount ,
-      null as drop_order ,
-      null as drop_qty ,
-      null as general_amount ,
-      null as general_order ,
-      null as general_qty ,
-      sum(revenue) AS Revenue,
-      sum(qty) as Store_qty,
-      orders as Orders,
-      null as Cost,
-      "sharperImage" as store
-      from `alidbtogcp.google_sheet.google_sheet_sharperImage`
-      group by 1,10
- ;;
+  union all
+  select (cast(date as timestamp)) as created_at,
+  sum(sales_Total) AS Revenue,
+  sum(qty) as Store_qty,
+  sum(orders) as Orders,
+  sum(cost) as Cost,
+  "COSTWAY-FB" as store
+  from `alidbtogcp.google_sheet.google_sheet_facebook_shop`
+  group by 1,6
+
+  union all
+  select (cast(date as timestamp)) as created_at,
+  sum(revenue) AS Revenue,
+  sum(qty) as Store_qty,
+  sum(orders) as Orders,
+  null as Cost,
+  "sharperImage" as store
+  from `alidbtogcp.google_sheet.google_sheet_sharperImage`
+  group by 1,6
+  ;;
   }
 
   filter: first_period_filter {
@@ -144,47 +124,6 @@ view: union_shop {
   }
 
 #Filtered measures
- measure: previous_period_drop_amount {
-  view_label: "_PoP"
-  type: sum
-  sql: ${drop_amount} ;;
-  filters: [period_selected: "First Period"]
-}
-
-measure: previous_period_drop_order {
-  view_label: "_PoP"
-  type: sum
-  sql: ${drop_order} ;;
-  filters: [period_selected: "First Period"]
-}
-
-measure: previous_period_drop_qty {
-  view_label: "_PoP"
-  type: sum
-  sql: ${drop_qty} ;;
-  filters: [period_selected: "First Period"]
-}
-
-measure: previous_period_general_order {
-  view_label: "_PoP"
-  type: sum
-  sql: ${general_order} ;;
-  filters: [period_selected: "First Period"]
-}
-
-measure: previous_period_general_amount {
-  view_label: "_PoP"
-  type: sum
-  sql: ${general_amount} ;;
-  filters: [period_selected: "First Period"]
-}
-
-measure: previous_period_general_qty {
-  view_label: "_PoP"
-  type: sum
-  sql: ${general_qty} ;;
-  filters: [period_selected: "First Period"]
-}
 
 measure: previous_period_revenues {
   view_label: "_PoP"
@@ -207,47 +146,7 @@ measure: previous_period_store_qty {
   filters: [period_selected: "First Period"]
 }
 
-  measure: current_period_drop_amount {
-    view_label: "_PoP"
-    type: sum
-    sql: ${drop_amount} ;;
-    filters: [period_selected: "Second Period"]
-  }
 
-  measure: current_period_drop_order {
-    view_label: "_PoP"
-    type: sum
-    sql: ${drop_order} ;;
-    filters: [period_selected: "Second Period"]
-  }
-
-  measure: current_period_drop_qty {
-    view_label: "_PoP"
-    type: sum
-    sql: ${drop_qty} ;;
-    filters: [period_selected: "Second Period"]
-  }
-
-  measure: current_period_general_order {
-    view_label: "_PoP"
-    type: sum
-    sql: ${general_order} ;;
-    filters: [period_selected: "Second Period"]
-  }
-
-  measure: current_period_general_amount {
-    view_label: "_PoP"
-    type: sum
-    sql: ${general_amount} ;;
-    filters: [period_selected: "Second Period"]
-  }
-
-  measure: current_period_general_qty {
-    view_label: "_PoP"
-    type: sum
-    sql: ${general_qty} ;;
-    filters: [period_selected: "Second Period"]
-  }
 
   measure: current_period_revenues {
     view_label: "_PoP"
@@ -288,35 +187,8 @@ measure: previous_period_store_qty {
     ]
     sql:${TABLE}.created_at ;;
   }
-  dimension: drop_amount {
-    type: number
-    sql: ${TABLE}.drop_amount ;;
-  }
 
-  dimension: drop_order {
-    type: number
-    sql: ${TABLE}.drop_order ;;
-  }
 
-  dimension: drop_qty {
-    type: number
-    sql: ${TABLE}.drop_qty ;;
-  }
-
-  dimension: general_amount {
-    type: number
-    sql: ${TABLE}.general_amount ;;
-  }
-
-  dimension: general_order {
-    type: number
-    sql: ${TABLE}.general_order ;;
-  }
-
-  dimension: general_qty {
-    type: number
-    sql: ${TABLE}.general_qty ;;
-  }
 
   dimension: revenus {
     type: number
@@ -437,12 +309,6 @@ measure: previous_period_store_qty {
 
   set: detail {
     fields: [
-      drop_amount,
-      drop_order,
-      drop_qty,
-      general_amount,
-      general_order,
-      general_qty,
       revenus,
       orders,
       store_qty,

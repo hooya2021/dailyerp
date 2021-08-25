@@ -17,3 +17,4 @@ explore: report_order {}
 explore: union_shop{}
 explore: channels {}
 explore: facebook_ads {}
+explore: channel_fb_cost {}
