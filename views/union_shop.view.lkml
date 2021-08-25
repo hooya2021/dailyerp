@@ -303,6 +303,7 @@ measure: previous_period_store_qty {
       }
       when: {
         sql: ${TABLE}.store="全站订单" ;;
+        label: "全站订单"
       }
       else: "Other"
     }
