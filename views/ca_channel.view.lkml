@@ -1,7 +1,7 @@
 view: ca_channel {
   derived_table: {
     sql: select weekday as Weekday,
-      date as Date,
+      cast(date as timestamp) as Date,
       null as Impression,
       clicks as Clicks,
       null as BounceRate,
@@ -13,7 +13,7 @@ view: ca_channel {
 
       union all
       select weekday as Weekday,
-      date as Date,
+      cast(date as timestamp) as Date,
       impression as Impression,
       clicks as Clicks,
       bounce_rate as BounceRate,
