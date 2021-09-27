@@ -41,6 +41,12 @@ view: ca_channel {
     sql: ${TABLE}.Date ;;
   }
 
+  dimension_group: created_at {
+    type: time
+    timeframes: [raw,date,week,month,year,day_of_week,day_of_month,day_of_year]
+    sql: ${TABLE}.date ;;
+  }
+
   dimension: impression {
     type: number
     sql: ${TABLE}.Impression ;;
