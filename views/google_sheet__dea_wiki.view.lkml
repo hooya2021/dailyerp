@@ -1,35 +1,20 @@
-view: ca_shareasale_affiliate {
-  sql_table_name: `alidbtogcp.google_sheet_ca.ca_shareasale_affiliate`
+view: google_sheet__dea_wiki {
+  sql_table_name: `google_sheet.google_sheet_ dealwiki`
     ;;
-
-  dimension: aov {
-    type: string
-    sql: ${TABLE}.aov ;;
-  }
-
-  dimension: clicks {
-    type: number
-    sql: ${TABLE}.clicks ;;
-  }
-
-  dimension: conversions {
-    type: number
-    sql: ${TABLE}.conversions ;;
-  }
 
   dimension: cos {
     type: string
     sql: ${TABLE}.cos ;;
   }
 
-  dimension: costusd {
+  dimension: cost {
     type: number
-    sql: ${TABLE}.costusd ;;
+    sql: ${TABLE}.cost ;;
   }
 
-  dimension: cr {
-    type: string
-    sql: ${TABLE}.cr ;;
+  dimension: coupon_used_time {
+    type: number
+    sql: ${TABLE}.coupon_used_time ;;
   }
 
   dimension_group: date {
@@ -48,9 +33,14 @@ view: ca_shareasale_affiliate {
     sql: ${TABLE}.date ;;
   }
 
-  dimension: revenueuds {
+  dimension: revenue {
     type: number
-    sql: ${TABLE}.revenueuds ;;
+    sql: ${TABLE}.revenue ;;
+  }
+
+  dimension: sessions {
+    type: number
+    sql: ${TABLE}.sessions ;;
   }
 
   dimension: weekday {

@@ -1,6 +1,11 @@
-view: ca_exchange_rate {
-  sql_table_name: `alidbtogcp.google_sheet_ca.ca_exchange_rate`
+view: google_sheet_facebook_shop {
+  sql_table_name: `alidbtogcp.google_sheet.google_sheet_facebook_shop`
     ;;
+
+  dimension: cost {
+    type: number
+    sql: ${TABLE}.cost ;;
+  }
 
   dimension_group: date {
     type: time
@@ -18,9 +23,19 @@ view: ca_exchange_rate {
     sql: ${TABLE}.date ;;
   }
 
-  dimension: rate {
+  dimension: orders {
     type: number
-    sql: ${TABLE}.rate ;;
+    sql: ${TABLE}.orders ;;
+  }
+
+  dimension: qty {
+    type: number
+    sql: ${TABLE}.qty ;;
+  }
+
+  dimension: sales_total {
+    type: number
+    sql: ${TABLE}.sales_Total ;;
   }
 
   dimension: weekday {

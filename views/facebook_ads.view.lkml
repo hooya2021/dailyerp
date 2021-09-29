@@ -1,19 +1,19 @@
-view: ca_facebooke_ads {
-  sql_table_name: `alidbtogcp.google_sheet_ca.ca_facebooke_ads`
+view: facebook_ads {
+  sql_table_name: `alidbtogcp.google_sheet.google_sheet_facebook_ads`
     ;;
 
-  dimension: amount_spent_cad {
+  dimension: amount_spent {
     type: number
-    sql: ${TABLE}.amount_spent_cad ;;
+    sql: ${TABLE}.amount_spent ;;
   }
 
-  dimension: amount_spent_usd {
-    type: number
-    sql: ${TABLE}.amount_spent_usd ;;
+  dimension: aov {
+    type: string
+    sql: ${TABLE}.aov ;;
   }
 
   dimension: av_cpc {
-    type: number
+    type: string
     sql: ${TABLE}.av_cpc ;;
   }
 
@@ -22,13 +22,23 @@ view: ca_facebooke_ads {
     sql: ${TABLE}.clicks ;;
   }
 
-  dimension: cos {
+  dimension: conversion_value {
     type: number
+    sql: ${TABLE}.conversion_value ;;
+  }
+
+  dimension: cos {
+    type: string
     sql: ${TABLE}.cos ;;
   }
 
+  dimension: cr {
+    type: string
+    sql: ${TABLE}.cr ;;
+  }
+
   dimension: ctr {
-    type: number
+    type: string
     sql: ${TABLE}.ctr ;;
   }
 
@@ -53,19 +63,9 @@ view: ca_facebooke_ads {
     sql: ${TABLE}.impressions ;;
   }
 
-  dimension: website_purchases_conversion_value_cad {
+  dimension: website_purchases {
     type: number
-    sql: ${TABLE}.website_purchases_conversion_value_cad ;;
-  }
-
-  dimension: website_purchases_conversion_value_usd {
-    type: number
-    sql: ${TABLE}.website_purchases_conversion_value_usd ;;
-  }
-
-  dimension: websitepurchases {
-    type: number
-    sql: ${TABLE}.websitepurchases ;;
+    sql: ${TABLE}.website_purchases ;;
   }
 
   dimension: weekday {

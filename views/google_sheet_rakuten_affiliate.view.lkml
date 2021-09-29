@@ -1,15 +1,10 @@
-view: ca_bing_cpc {
-  sql_table_name: `alidbtogcp.google_sheet_ca.ca_bing_cpc`
+view: google_sheet_rakuten_affiliate {
+  sql_table_name: `google_sheet.google_sheet_rakuten_affiliate`
     ;;
 
   dimension: aov {
-    type: string
-    sql: ${TABLE}.aov ;;
-  }
-
-  dimension: bounce_rate {
     type: number
-    sql: ${TABLE}.bounce_rate ;;
+    sql: ${TABLE}.aov ;;
   }
 
   dimension: clicks {
@@ -22,14 +17,9 @@ view: ca_bing_cpc {
     sql: ${TABLE}.conversions ;;
   }
 
-  dimension: cos {
-    type: string
-    sql: ${TABLE}.cos ;;
-  }
-
-  dimension: costusd {
+  dimension: cost {
     type: number
-    sql: ${TABLE}.costusd ;;
+    sql: ${TABLE}.cost ;;
   }
 
   dimension: cr {
@@ -53,14 +43,9 @@ view: ca_bing_cpc {
     sql: ${TABLE}.date ;;
   }
 
-  dimension: impression {
+  dimension: revenue {
     type: number
-    sql: ${TABLE}.impression ;;
-  }
-
-  dimension: revenueusd {
-    type: number
-    sql: ${TABLE}.revenueusd ;;
+    sql: ${TABLE}.revenue ;;
   }
 
   dimension: weekday {
