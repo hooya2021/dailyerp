@@ -76,6 +76,13 @@ view: channel_fb_cost {
               'Rakuten' as Channel
               from `alidbtogcp.google_sheet.google_sheet_rakuten_affiliate`
               group by 1,3
+
+              union all
+              select (cast(date as timestamp)) as Date,
+              sum(cost) as Cost,
+              "shareasale" as Channel
+              from `alidbtogcp.google_sheet.google_sheet_share_asale`
+              group by 1,3
                ;;
     }
 

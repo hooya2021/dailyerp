@@ -14,7 +14,6 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      null as COS,
       "Bing/CPC" as Channel
       from `alidbtogcp.google_sheet.google_sheet_bing_cpc`
 
@@ -33,7 +32,6 @@ view: channels {
        null as revenues,
        null as sessions,
        null as coupon_used_time,
-       cos as COS,
       "Connexity" as Channel
       from `alidbtogcp.google_sheet.google_sheet_connexity`
 
@@ -52,7 +50,6 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      NULL AS COS,
       "Rakuten_affiliate" as Channel
       from `alidbtogcp.google_sheet.google_sheet_rakuten_affiliate`
 
@@ -71,7 +68,6 @@ view: channels {
       revenues as revenues,
       null as sessions,
       null as coupon_used_time,
-      NULL AS COS,
       "Criteo" as Channel
       from `alidbtogcp.google_sheet.google_sheet_criteo`
 
@@ -90,7 +86,6 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      cos as COS,
       "Bradsdeal" as Channel
       from `alidbtogcp.google_sheet.google_sheet_bradsdeal`
 
@@ -109,7 +104,6 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      cos as COS,
       "Slickdeals" as Channel
       from `alidbtogcp.google_sheet.google_sheet_slickdeals`
 
@@ -128,7 +122,6 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      cos as COS,
       "DealWiki" as Channel
       from `alidbtogcp.google_sheet.google_sheet_ dea_wiki`
 
@@ -147,7 +140,6 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      cos as COS,
       "DealNews" as Channel
       from `alidbtogcp.google_sheet.google_sheet_ deal_news`
 
@@ -166,7 +158,6 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      cos as COS,
       "iHotOffer" as Channel
       from `alidbtogcp.google_sheet.google_sheet_ihot_offer`
 
@@ -185,10 +176,27 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      cos as COS,
       "Outbrain" as Channel
       from `alidbtogcp.google_sheet.google_sheet_outbrain`
-       ;;
+
+     union all
+     select weekday as weekday,
+     cast(date as timestamp) as date,
+     null as impression,
+     null as clicks,
+     null as BounceRate,
+     conversions as conversions,
+     revenue as Revenue,
+     cost as Cost,
+     NULL AS conversionL,
+      null as revenueL,
+      null as conversion,
+      null as revenues,
+      null as sessions,
+      null as coupon_used_time,
+      "shareasale" as Channel
+      from `alidbtogcp.google_sheet.google_sheet_share_asale`
+ ;;
   }
 
   measure: count {
@@ -201,15 +209,11 @@ view: channels {
     sql: ${TABLE}.weekday ;;
   }
 
- dimension: date {
-  type: date
-  sql: ${TABLE}.date ;;
-}
-dimension_group: created_at {
-  type: time
-  timeframes: [raw,date,week,month,year,day_of_week,day_of_month,day_of_year]
-  sql: ${TABLE}.date ;;
-}
+  dimension_group: date {
+    type: time
+    sql: ${TABLE}.date ;;
+  }
+
   dimension: impression {
     type: number
     sql: ${TABLE}.impression ;;
@@ -270,11 +274,6 @@ dimension_group: created_at {
     sql: ${TABLE}.coupon_used_time ;;
   }
 
-  dimension: cos {
-    type: string
-    sql: ${TABLE}.COS ;;
-  }
-
   dimension: channel {
     type: string
     sql: ${TABLE}.Channel ;;
@@ -283,7 +282,7 @@ dimension_group: created_at {
   set: detail {
     fields: [
       weekday,
-      date,
+      date_time,
       impression,
       clicks,
       bounce_rate,
@@ -296,8 +295,18 @@ dimension_group: created_at {
       revenues,
       sessions,
       coupon_used_time,
-      cos,
       channel
     ]
   }
+
+ dimension: date {
+  type: date
+  sql: ${TABLE}.date ;;
+}
+dimension_group: created_at {
+  type: time
+  timeframes: [raw,date,week,month,year,day_of_week,day_of_month,day_of_year]
+  sql: ${TABLE}.date ;;
+}
+
 }
