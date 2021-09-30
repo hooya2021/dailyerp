@@ -1,64 +1,64 @@
 view: union_shop {
   derived_table: {
-  sql: select (cast(report_time as timestamp)) as created_at,
-  SUM(drop_amount) as Revenus,
-  sum(drop_qty) as Store_qty,
-  sum(drop_order) as Orders,
-  null as Cost,
-  "全站订单" as store
-  from `alidbtogcp.costmin.report_order`
-  group by 1,6
+    sql: select (cast(report_time as timestamp)) as created_at,
+        SUM(drop_amount) as Revenus,
+        sum(drop_qty) as Store_qty,
+        sum(drop_order) as Orders,
+        null as Cost,
+        "全站订单" as store
+        from `alidbtogcp.costmin.report_order`
+        group by 1,6
 
-  union all
-  select (cast(report_time as timestamp)) as created_at,
-  SUM(general_amount) as Revenus,
-  sum(general_qty) as Store_qty,
-  sum(general_order) as Orders,
-  null as Cost,
-  "散客订单" as store
-  from `alidbtogcp.costmin.report_order`
-  group by 1,6
+        union all
+        select (cast(report_time as timestamp)) as created_at,
+        SUM(general_amount) as Revenus,
+        sum(general_qty) as Store_qty,
+        sum(general_order) as Orders,
+        null as Cost,
+        "散客订单" as store
+        from `alidbtogcp.costmin.report_order`
+        group by 1,6
 
-  union all
-  select (cast(ship_by_date as timestamp)) as created_at,
-  sum(grand_total) as Revenue,
-  sum(orderqty) as Store_qty,
-  COUNT(DISTINCT google_id) as Orders,
-  null as Cost,
-  "costway-SA" as store
-  from `alidbtogcp.costmin.google_order`
-  group by 1,6
+        union all
+        select (cast(ship_by_date as timestamp)) as created_at,
+        sum(grand_total) as Revenue,
+        sum(orderqty) as Store_qty,
+        COUNT(DISTINCT google_id) as Orders,
+        null as Cost,
+        "costway-SA" as store
+        from `alidbtogcp.costmin.google_order`
+        group by 1,6
 
-  union all
-  select created_at as created_at,
-  sum(grand_total) AS Revenue,
-  sum(qty) as Store_qty,
-  COUNT(DISTINCT increment_id) as Orders,
-  null as Cost,
-  store as store
-  from `alidbtogcp.costmin.drop_shop_purchase`
-  group by 1,6
+        union all
+        select created_at as created_at,
+        sum(grand_total) AS Revenue,
+        sum(qty) as Store_qty,
+        COUNT(DISTINCT increment_id) as Orders,
+        null as Cost,
+        store as store
+        from `alidbtogcp.costmin.drop_shop_purchase`
+        group by 1,6
 
-  union all
-  select (cast(date as timestamp)) as created_at,
-  sum(sales_Total) AS Revenue,
-  sum(qty) as Store_qty,
-  sum(orders) as Orders,
-  sum(cost) as Cost,
-  "COSTWAY-FB" as store
-  from `alidbtogcp.google_sheet.google_sheet_facebook_shop`
-  group by 1,6
+        union all
+        select (cast(date as timestamp)) as created_at,
+        sum(sales_Total) AS Revenue,
+        sum(qty) as Store_qty,
+        sum(orders) as Orders,
+        sum(cost) as Cost,
+        "COSTWAY-FB" as store
+        from `alidbtogcp.google_sheet.google_sheet_facebook_shop`
+        group by 1,6
 
-  union all
-  select (cast(date as timestamp)) as created_at,
-  sum(revenue) AS Revenue,
-  sum(qty) as Store_qty,
-  sum(orders) as Orders,
-  null as Cost,
-  "sharperImage" as store
-  from `alidbtogcp.google_sheet.google_sheet_sharperImage`
-  group by 1,6
-  ;;
+        union all
+        select (cast(date as timestamp)) as created_at,
+        sum(revenue) AS Revenue,
+        sum(qty) as Store_qty,
+        sum(orders) as Orders,
+        null as Cost,
+        "sharperImage" as store
+        from `alidbtogcp.google_sheet.google_sheet_sharperImage`
+        group by 1,6
+        ;;
   }
 
   filter: first_period_filter {
@@ -125,26 +125,26 @@ view: union_shop {
 
 #Filtered measures
 
-measure: previous_period_revenues {
-  view_label: "_PoP"
-  type: sum
-  sql: ${revenus} ;;
-  filters: [period_selected: "First Period"]
-}
+  measure: previous_period_revenues {
+    view_label: "_PoP"
+    type: sum
+    sql: ${revenus} ;;
+    filters: [period_selected: "First Period"]
+  }
 
-measure: previous_period_orders {
-  view_label: "_PoP"
-  type: sum
-  sql: ${orders} ;;
-  filters: [period_selected: "First Period"]
-}
+  measure: previous_period_orders {
+    view_label: "_PoP"
+    type: sum
+    sql: ${orders} ;;
+    filters: [period_selected: "First Period"]
+  }
 
-measure: previous_period_store_qty {
-  view_label: "_PoP"
-  type: sum
-  sql: ${store_qty} ;;
-  filters: [period_selected: "First Period"]
-}
+  measure: previous_period_store_qty {
+    view_label: "_PoP"
+    type: sum
+    sql: ${store_qty} ;;
+    filters: [period_selected: "First Period"]
+  }
 
 
 
@@ -295,7 +295,7 @@ measure: previous_period_store_qty {
       when: {
         sql: ${TABLE}.store="sharperImage" ;;
         label: "sharperImage"
-        }
+      }
 
       when: {
         sql: ${TABLE}.store="散客订单"  ;;
