@@ -20,7 +20,7 @@ view: union_shop {
         group by 1,6
 
         union all
-        select (cast(ship_by_date as timestamp)) as created_at,
+        select (cast(placeorder as timestamp)) as created_at,
         sum(grand_total) as Revenue,
         sum(orderqty) as Store_qty,
         COUNT(DISTINCT google_id) as Orders,
