@@ -51,6 +51,16 @@ view: union_shop {
 
         union all
         select (cast(date as timestamp)) as created_at,
+        sum(sales_Total) AS Revenue,
+        sum(qty) as Store_qty,
+        sum(orders) as Orders,
+        NULL as Cost,
+        "Costway-BBB" as store
+        from `alidbtogcp.google_sheet.google_sheet_bbb`
+        group by 1,6
+
+        union all
+        select (cast(date as timestamp)) as created_at,
         sum(revenue) AS Revenue,
         sum(qty) as Store_qty,
         sum(orders) as Orders,
@@ -291,7 +301,10 @@ view: union_shop {
         sql: ${TABLE}.store="costway-SA" ;;
         label: "costway-SA"
       }
-
+      when: {
+        sql: ${TABLE}.store="Costway-BBB" ;;
+        label: "Costway-BBB"
+      }
       when: {
         sql: ${TABLE}.store="sharperImage" ;;
         label: "sharperImage"
