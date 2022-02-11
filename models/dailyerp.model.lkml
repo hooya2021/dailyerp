@@ -19,3 +19,4 @@ explore: channels {}
 explore: facebook_ads {}
 explore: channel_fb_cost {}
 explore: google_sheet_bbb {}
+explore: bestoutdor_2022 {}

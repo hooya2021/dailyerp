@@ -192,6 +192,7 @@ view: union_shop {
       date,
       week,
       month,
+      fiscal_month_num,
       quarter,
       year
     ]
