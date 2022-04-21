@@ -196,6 +196,24 @@ view: channels {
       null as coupon_used_time,
       "shareasale" as Channel
       from `alidbtogcp.google_sheet.google_sheet_share_asale`
+
+      union all
+     select weekday as weekday,
+     cast(date as timestamp) as date,
+     null as impression,
+     click as clicks,
+     bounce_rate as BounceRate,
+     conversions as conversions,
+     revenues as Revenue,
+     cost as Cost,
+     NULL AS conversionL,
+      null as revenueL,
+      null as conversion,
+      null as revenues,
+      null as sessions,
+      null as coupon_used_time,
+      "pinterest" as Channel
+      from `alidbtogcp.google_sheet.google_sheet_pinterest`
  ;;
   }
 
