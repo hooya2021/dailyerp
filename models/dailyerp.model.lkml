@@ -21,3 +21,5 @@ explore: channel_fb_cost {}
 explore: google_sheet_bbb {}
 explore: bestoutdor_2022 {}
 explore: shopify_order_report {}
+explore: us_erp_shop {}
+explore: google_ads_cost {}
