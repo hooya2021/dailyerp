@@ -214,6 +214,24 @@ view: channels {
       null as coupon_used_time,
       "pinterest" as Channel
       from `alidbtogcp.google_sheet.google_sheet_pinterest`
+
+      union all
+      select weekday as weekday,
+      cast(date as timestamp) as date,
+      null as impression,
+      clicks as clicks,
+      bounce_rate as BounceRate,
+       conversions as conversions,
+       revenue as Revenue,
+       cost as Cost,
+       NULL AS conversionL,
+       null as revenueL,
+       null as conversion,
+       null as revenues,
+       null as sessions,
+       null as coupon_used_time,
+      "RTB House" as Channel
+      from `alidbtogcp.google_sheet.RTB_HOUSE`
  ;;
   }
 
