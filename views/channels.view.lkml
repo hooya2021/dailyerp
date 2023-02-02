@@ -14,7 +14,8 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      "Bing/CPC" as Channel
+      "Bing/CPC" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_bing_cpc`
 
       union all
@@ -32,7 +33,8 @@ view: channels {
        null as revenues,
        null as sessions,
        null as coupon_used_time,
-      "Connexity" as Channel
+      "Connexity" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_connexity`
 
       union all
@@ -50,8 +52,9 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      "Rakuten_affiliate" as Channel
-      from `alidbtogcp.google_sheet.google_sheet_rakuten_affiliate`
+      "Rakuten_affiliate" as Channel,
+      real_revenue as real_revenue
+      from `alidbtogcp.google_sheet.Rakuten_Affiliate`
 
       union all
       select weekday as weekday,
@@ -68,7 +71,8 @@ view: channels {
       revenues as revenues,
       null as sessions,
       null as coupon_used_time,
-      "Criteo" as Channel
+      "Criteo" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_criteo`
 
       union all
@@ -86,7 +90,8 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      "Bradsdeal" as Channel
+      "Bradsdeal" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_bradsdeal`
 
       union all
@@ -104,7 +109,8 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      "Slickdeals" as Channel
+      "Slickdeals" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_slickdeals`
 
       union all
@@ -122,7 +128,8 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      "DealWiki" as Channel
+      "DealWiki" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_ dea_wiki`
 
       union all
@@ -140,7 +147,8 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      "DealNews" as Channel
+      "DealNews" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_ deal_news`
 
       union all
@@ -158,7 +166,8 @@ view: channels {
       null as revenues,
       sessions as sessions,
       coupon_used_time as coupon_used_time,
-      "iHotOffer" as Channel
+      "iHotOffer" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_ihot_offer`
 
       union all
@@ -176,7 +185,8 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      "Outbrain" as Channel
+      "Outbrain" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_outbrain`
 
      union all
@@ -194,8 +204,9 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      "shareasale" as Channel
-      from `alidbtogcp.google_sheet.google_sheet_share_asale`
+      "shareasale" as Channel,
+      real_revenue as real_revenue
+      from `alidbtogcp.google_sheet.ShareAsale `
 
       union all
      select weekday as weekday,
@@ -212,7 +223,8 @@ view: channels {
       null as revenues,
       null as sessions,
       null as coupon_used_time,
-      "pinterest" as Channel
+      "pinterest" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.google_sheet_pinterest`
 
       union all
@@ -230,7 +242,8 @@ view: channels {
        null as revenues,
        null as sessions,
        null as coupon_used_time,
-      "RTB House" as Channel
+      "RTB House" as Channel,
+      null as real_revenue
       from `alidbtogcp.google_sheet.RTB_HOUSE`
  ;;
   }
@@ -273,6 +286,11 @@ view: channels {
   dimension: revenue {
     type: number
     sql: ${TABLE}.Revenue ;;
+  }
+
+  dimension: real_revenue {
+    type: number
+    sql: ${TABLE}.real_revenue ;;
   }
 
   dimension: cost {
