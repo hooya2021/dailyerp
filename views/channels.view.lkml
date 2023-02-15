@@ -245,6 +245,25 @@ view: channels {
       "RTB House" as Channel,
       null as real_revenue
       from `alidbtogcp.google_sheet.RTB_HOUSE`
+
+      union all
+      select weekday as weekday,
+      cast(date as timestamp) as date,
+      null as impression,
+      null as clicks,
+      null as BounceRate,
+      conversions as conversions,
+      revenue as Revenue,
+      cost as Cost,
+      NULL AS conversionL,
+      null as revenueL,
+      null as conversion,
+      null as revenues,
+      null as sessions,
+      null as coupon_used_time,
+      "Impact" as Channel,
+      real_revenue as real_revenue
+      from `alidbtogcp.google_sheet.Impact_US`
  ;;
   }
 
