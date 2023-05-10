@@ -7,6 +7,11 @@ view: facebook_ads {
     sql: ${TABLE}.amount_spent ;;
   }
 
+  dimension: other_cost{
+    type: number
+    sql: ${TABLE}.other_cost ;;
+  }
+
   dimension: aov {
     type: string
     sql: ${TABLE}.aov ;;
